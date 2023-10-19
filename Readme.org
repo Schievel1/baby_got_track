@@ -49,12 +49,9 @@ If you follow this guide to build it, you can skip several features if you want 
     - [[#customizing-your-key-map][Customizing your key map]]
     - [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]]
     - [[#compiling-your-firmware][Compiling your firmware]]
-  - [[#flashing-the-compiled-hex-file][Flashing the compiled .hex file.]]
-    - [[#install-avrdude][Install avrdude]]
-    - [[#get-your-device-name][Get your device name]]
-    - [[#flashing-the-hex][Flashing the .hex]]
-- [[#tap-dance-keymap][Tap-dance keymap]]
-  - [[#changing-tap-dance-functions][Changing tap-dance functions]]
+  - [[#flashing-the-compiled-uf2-file][Flashing the compiled .uf2 file.]]
+    - [[#bringing-the-rp2040-into-flashing-mode-the-first-time][Bringing the RP2040 into flashing mode the first time]]
+    - [[#bringing-the-rp2040-into-flashing-mode-when-it-was-flashed-with-qmk-before][Bringing the RP2040 into flashing mode when it was flashed with qmk before]]
 #+END_QUOTE
 
 * About this Repository
@@ -424,11 +421,7 @@ The firmware also has some additional keycodes which you can use in the matrix a
 |-----------------------------+-------------+------------------------------------------------------------------------------|
 
 ***** Layers
-In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the _COLEMAKDHM layer, but you have to change the ~#define~ lines at the beginning of the file accordingly.
-#+begin_src c
-#define _COLEMAKDHM 0
-#+end_src
-On newer keymaps there is an enum instead:
+In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the _COLEMAKDHM layer, but you have to change the enum at the beginning of the file accordingly.
 #+begin_src c
 enum custom_layers {
     _COLEMAKDHM,
@@ -437,7 +430,7 @@ enum custom_layers {
 };
 #+end_src
 You better leave the RAISE and LOWER name like they are. You could change them, but you would have to change them everywhere in the file.
-To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the beginning of the file or the enum. Count the number up with every layer you add.
+To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new line with that name to the enum.
 You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, CTRL etc. keys. So when you hold that key down, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
 
 
@@ -478,8 +471,6 @@ First of all, copy only the part that says
 into an existing Tractyl layouts ~keymap.c~. So you will not mess up the names of the layers.
 Now exchange the keycodes that should modify the trackball modes with the custom keycodes from above.
 
-**** TODO
-
 *** Other things to set in the firmware
 If you haven't yet, you can create the file ~keyboards/handwired/tractyl_manuform/5x6_right/keymaps/yourkeymap/config.h~. In it you can put the following lines to change the behavior of your keyboard.
 
@@ -495,107 +486,28 @@ The sensitivity in sniping mode.
 **** #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
  Change of the pointers sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
 
-**** #define CHARYBDIS_DRAGSCROLL_DPI 100
-The sensitivity in dragscroll mode.
-
-**** #define CHARYBDIS_DRAGSCROLL_REVERSE_X / _Y
-Reverse the scroll direction in dragscroll mode for the x / y axis.
-
-**** #define CHARYBDIS_CARRET_BUFFER 40
-The sensitivity in carret mode. Higher number means less sensitive.
-
-**** #define CHARYBDIS_CARRET_REVERSE_X / _Y
-Reverse the direction in carret mode for the x / y axis.
-
 **** #define CHARYBDIS_POINTER_ACCELERATION_ENABLE
 Enable pointer acceleration.
 
 **** #define CHARYBDIS_POINTER_ACCELERATION_FACTOR 24
 Amount of pointer acceleration.
 
-**** #define CUSTOM_FN_RIGHT / CUSTOM_FN_LEFT / _UP / _DOWN
-Here you can define the keycode that gets executed in custom mode when the trackball is rotated to the right / left / up / down.
-
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
-qmk compile -kb handwired/Tractyl_manuform/5x6_right/arduinomicro -km <name_of_your_keymap>
+qmk compile -kb handwired/Tractyl_manuform/5x6_right/rpi2040 -km <name_of_your_keymap>
 #+end_src
-while being inside the qmk_firmware_dm_r_track folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
+while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .uf2-file in the qmk_firmware folder.
 
-** Flashing the compiled .hex file.
-Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with the somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
-I have never flashed a QMK firmware onto an Arduino in Windows or Mac, but I guess it's rather easy using [[https://github.com/qmk/qmk_toolbox/releases][QMK Toolbox.]]
-
-To flash a .hex in Linux you need to do the following:
-*** Install avrdude
-On Gentoo this is ~sudo emerge dev-embedded/avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone nerdy enough to want to use such a keyboard knows how to install software on his/ her distro.
-*** Get your device name
-To get your device name in Linux you use the command ~dmesg | tail~. This shows you the end of the log of the kernel messages, so plug in the left side of the keyboard into your USB without the right side connected to it, put your Arduino into flash mode by pressing the reset button and run ~dmesg | tail~.
-This will give you some output similar to
+You can also do
 #+begin_src sh
-~[26768.779976] cdc_acm 1-12:1.0: ttyACM0: USB ACM device~
+qmk compile -kb handwired/Tractyl_manuform/5x6_right/rpi2040 -km <name_of_your_keymap>
 #+end_src
+to compile and flash in one go.
 
-Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that these device names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino (or some other USB/Serial device) plugged in, which already occupies ~/dev/ttyACM0~. Depending on your distro this could also be called ~/dev/ttyUSB0~ instead.
-
-If you can not find your device with ~dmesg | tail~, try finding it with
-#+begin_src sh
-find /dev -name '*ttyACM*' # or
-find /dev -name '*ttyUSB*'
-#+end_src
-
-It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
-To get permanent rights to access the Arduino as a user, you could also find the group of the ~/dev/ttyACM*~ file with ~ls -la /dev | grep ttyACM~, which should output something like this:
-~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout (in this case) to get read/write permissions with ~sudo usermod -a -G dialout myUserName~.
-However, the group name ~dialout~ could again depend on the distro.
-
-*** Flashing the .hex
-Now with all that information, put your Arduino into flash mode again by pressing the reset button. Use the command
-#+begin_src sh
-avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_tractyl_manuform_5x6_right_arduinomicro_yourfilenamehere.hex":i
-#+end_src
-inside the folder where your .hex file is.
-Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
-
-Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch or connecting a reset pin with ground. (Either the one on the board if present or the one you wired.) Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns ~/dev/ttyACM*~, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
-Other times you get things like ~avrdude: butterfly_recv(): programmer is not responding~. Then it helps to tap the reset button right after pressing enter on the upload command.
-Then I have had it with several Arduino Pro Micros, that I had to hold the reset button for two seconds or so, then let it go, then tap it. I guess there are just too many Arduino manufacturers out there, and each of them has its own quirks.
-So do not panic if uploading does not work at the first try. It could certainly be that your have some problem with avrdude, but most of the times it is just that you got the timing wrong and the Arduino is not in flashing mode.
-Once you are done with flashing the one side, disconnect it. Then connect the other side and do the same procedure again. You use the same .hex file on both sides.
-When you are done, connect the USB cable to the right side and use your new keyboard!
-
-* Tap-dance keymap
-QMK has a feature called [[https://github.com/qmk/qmk_firmware/blob/master/docs/feature_tap_dance.md][Tap Dance]], which is really useful for the trackball modes we have in this keyboard. With Tap Dance you can give a key different functions depending on how often you tap it. Although Tap Dance supports way more, I only copied some basic functionality over from Qurns first Tap Dance software to change between the different trackball modes.
-By default, CTRL switches on cursor mode, Shift carret mode and Alt dragscroll mode. Tapping the key once will activate the corresponding mode, holding it will activate its actual modifier behavior. I also put in something for the vim lovers: I found myself pressing escape when I wanted to go back to cursor mode, because for my vim-brain this is like vims normal mode. So I put this functionality on the escape key.
-You can flash the Tap Dance firmware using this command:
-#+begin_src sh
-qmk compile -kb handwired/Tractyl_manuform/5x6_right/arduinomicro -km tapdance
-#+end_src
-
-The keymap I put in is the keymap I use, which is Dvorak. So keep in mind you might want to change that.
-The tap-dance functions are the key codes that start with ~TD(~ like ~TD(SFT_TM)~ for the shift tap dance functions.
-
-** Changing tap-dance functions
-To change what a tap dance function does, e.g. if you want to activate dragscroll with a tap of the shift key instead of the alt key, you can edit ~keyboards/handwired/tractyl_manuform/5x6_right/keymaps/tapdance/tapance.c~.
-In there you have several functions like this one:
-#+begin_src c
-void sfttm_finished(qk_tap_dance_state_t *state, void *user_data) {
-  td_state = cur_dance(state);
-  sticky_timer = timer_read32();
-  activate_sft = true;
-  sticky_key = true;
-  switch (td_state) {
-  case SINGLE_TAP:
-    charybdis_set_pointer_carret_enabled(true);
-    break;
-  case SINGLE_HOLD:
-    activate_stkeys();
-    sticky_key = false;
-  }
-}
-#+end_src
-This is the tap dance function for activating the shift modifier and for activating the carret mode.
-To activate dragscroll mode instead for example, you would change the line that says ~charybdis_set_pointer_carret_enabled(true);~ into ~charybdis_set_pointer_dragscroll_enabled(true);~.
-That's all.
-The different functions to activate the modes are in ~keyboards/handwired/tractyl_manuform/tractyl_manuform.h~
+** Flashing the compiled .uf2 file.
+Flashing is very straightforward on the RP2040. Bring the RP2040 into bootloader mode then it will show up like an usb stick on the PC. Then copy the .uf2 file from the step before onto that 'USB stick'.
+*** Bringing the RP2040 into flashing mode the first time
+When flashing an RP2040 the first time, you bring them into bootloader mode by holding the BOOT switch while plugging the usb in.
+*** Bringing the RP2040 into flashing mode when it was flashed with qmk before
+Bring the RP2040 into bootloader mode by double tapping the RST switch. There are also several other ways, e.g. connect pin GP22 to ground twice in one second. Or hold down the upper left key on the left half or the upper right key on the right half while plugging the USB in.
