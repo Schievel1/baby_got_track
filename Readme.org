@@ -8,12 +8,12 @@ WIP! I will update this while builing this thing.
 WIP!
 
 This is a Dactyl Manuform with a trackball in its right thumb cluster, a Tractyl Manuform so to speak.
-It uses a RaspberryPi RP2040 as this MCU gives a good mix of power, availabitly and reliability
+It uses a RaspberryPi RP2040 as this MCU gives a good mix of power, availability and reliability
 Features:
 - Trackball (duh)
 - Per key RGB LED
-- Uses a flexible PCB I made
-- LED dotmatrix screens
+- Uses a flexible PCB I designed
+- Two LED dotmatrix screens
 - Roller encoders
 
 If you follow this guide to build it, you can skip several features if you want to.
@@ -21,7 +21,7 @@ If you follow this guide to build it, you can skip several features if you want 
 * Table of contents :TOC_3_gh:QUOTE:
 #+BEGIN_QUOTE
 - [[#about-this-repository][About this Repository]]
-  - [[#change-later-when-images-are-gone-license][(change later when images are gone) License]]
+  - [[#license][License]]
 - [[#building-guide][Building guide]]
   - [[#needed-items][Needed items]]
     - [[#parts][Parts]]
@@ -31,22 +31,19 @@ If you follow this guide to build it, you can skip several features if you want 
   - [[#wiring--mounting][Wiring & Mounting]]
     - [[#try-mounting-the-usb-c-female-to-male-cable-and-the-trs-socket][Try mounting the USB-C female to male cable and the TRS socket.]]
     - [[#wiring-diagrams][Wiring diagrams]]
-    - [[#if-you-have-the-blank-pcb-solder-the-diodes-and-leds-on][(if you have the blank PCB) Solder the diodes and LEDs on.]]
+    - [[#solder-the-diodes-and-leds-on][Solder the diodes and LEDs on.]]
     - [[#solder-the-amoeba-kings][Solder the Amoeba kings]]
     - [[#solder-the-pin-headers-onto-the-pcbs-and-the-rp2040][Solder the pin headers onto the PCBs and the RP2040]]
     - [[#solder-the-switches-to-the-pcb][Solder the switches to the PCB]]
     - [[#solder-the-roller-encoders][Solder the roller encoders]]
     - [[#solder-the-jumper-wires-between-the-trrs-socket-and-the-rp2040][Solder the jumper wires between the TRRS socket and the RP2040.]]
     - [[#solder-the-pmw3360-trackball-sensor][Solder the PMW3360 trackball sensor]]
-    - [[#mounting-and-soldering-the-reset-switch][Mounting and soldering the reset switch]]
     - [[#mount-the-ball-bearings-for-the-trackball][Mount the ball bearings for the trackball.]]
-    - [[#mount-the-m3-insert-nuts][Mount the M3 insert nuts]]
+    - [[#mount-the-insert-nuts][Mount the insert nuts]]
     - [[#mount-the-m2-insert-nuts][Mount the M2 insert nuts]]
+    - [[#wiring-the-amoeba-kings][wiring the amoeba kings]]
     - [[#putting-everything-together][Putting everything together]]
 - [[#flashing-the-firmware][Flashing the firmware]]
-  - [[#a-word-about-trackball-modes][A word about trackball modes]]
-    - [[#non-stacking-modes][Non-Stacking modes]]
-    - [[#stacking-modes][Stacking modes]]
   - [[#preparing-the-qmk-firmware][Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
@@ -61,25 +58,24 @@ If you follow this guide to build it, you can skip several features if you want 
 #+END_QUOTE
 
 * About this Repository
-The idea and all some models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
+The idea and some models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
 
 After writing my [[https://github.com/Schievel1/dactyl_manuform_r_track][first guide on building tracktyls]] I also built an enhanced version that should have had everything:
 - Per key RGB
 - Big screen
-- Small sceen
+- Small screen
 - Roller encoders
 - Trackball
+- USB HUB
 
 However, while building it, it came to me that I could never write a guide on it, because it required way to much hackery and superglue.
-It was all way too much stuff crammed into that small housing and it I could actually guide people to doing botchery. I figured that the problem here was that everything is wired together using single wires and glued in place. (The RGB LEDs mainly.)
+It was all way too much stuff crammed into that small housing and I do not want to actually guide people to doing botchery. I figured that the problem here was that everything is wired together using single wires and glued in place. (The RGB LEDs mainly.)
 We need a circuit board!
 
-TODO (remove this disclaimer) THE BOARD NEEDS TO BE TESTED AND CAN NOT BE BOUGHT YET
-I therefore designed one and let it made. Anyone interested can buy it on ebay. They even come with RGB LEDS and diodes preinstalled for people who aren't keen on SMD soldering.
+I therefore designed one and let it made. Anyone interested can buy it on [[https://www.ebay.de/itm/276107110019][here on ebay]]. They require the builders to do some SMD soldering themselves, though. Maybe I will do some pre-fabricated ones in the future.
 
-** TODO (change later when images are gone) License
-Please note that the [[file:images/more_images/Pinout-Micro_latest.png][Arduino Micro pinout image]] and the part that is used in the image of the [[file:images/wiring_right.png][right sides wiring diagram]] is [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed. The image is work of [[https://www.arduino.cc/][Arduino]].
-All other images are [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed as well.
+** License
+Images are [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed.
 
 * Building guide
 ** Needed items
@@ -87,27 +83,29 @@ All other images are [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA
 I apologize if most of these parts are from German ebay vendors, but this is where I got them from. I am sure you can find them from somewhere else. I list the exact amount of parts needed, for some things it makes sense to have some spare, like switches, diodes, jumper wires, ball bearings, etc. Many of the parts come in packages of a 100 or so, so you have some spares anyway.
 
 *** Parts
-- 3D printed case. A few models can be found in the folder [[./models][models]], but most 5x6 Tracktyl Models should work with the flexible PCB. You can also create new ones using [[https://github.com/bullwinkle3000/dactyl-keyboard][this generator]] or you can buy them directly from their [[https://wylderbuilds.com/][shop]]. Also [[https://github.com/Harry-the-Pott][a friend of mine]] sometimes print and sells them if he is in the mood.
+- 3D printed case. A few models can be found in the folder [[./models][models]], but most 5x6 Tractyl Models should work with the flexible PCB. You can also create new ones using [[https://github.com/bullwinkle3000/dactyl-keyboard][this generator]] or you can buy them directly from their [[https://wylderbuilds.com/][shop]]. The ones in this repository are mode using the generator on standard settings for the distance of keys. (Important for the PCB). Also [[https://github.com/Harry-the-Pott][a friend of mine]] sometimes print and sells them if he is in the mood.
 - 62 keyboard switches. Any of the usual Cherry style switches will work. Cherry, Kailh, Gateron, you name it. Better order a few extra, like 70 or so.
-- 2 flexible PCBs
-- 10 Amoeba Kings
-- (only if you have the blank PCB) 62 1N4148 Diodes in SOD-123 form. E.g. [[https://de.aliexpress.com/item/1005002383505485.html?spm=a2g0o.order_list.order_list_main.50.559e5c5fTMDYmt&gatewayAdapt=glo2deu][those.]] (definitely buy some extra of those, they break easily when hand soldered)
-- (only if you have the blank PCB) 64 SK6803 MINI-E RGB LEDs. E.g.[[https://de.aliexpress.com/item/1005003636607308.html?spm=a2g0o.order_list.order_list_main.83.559e5c5fTMDYmt&gatewayAdapt=glo2deu][those.]] (people report they also easily break from heat while soldering, but none ever broke for me)
+- 2 [[https://www.ebay.de/itm/276107110019][flexible PCBs]]
+- 10 [[https://www.ebay.de/itm/276095258088][Amoeba Kings]]
+- 62 1N4148 Diodes in SOD-123 form. E.g. [[https://de.aliexpress.com/item/1005002383505485.html?spm=a2g0o.order_list.order_list_main.50.559e5c5fTMDYmt&gatewayAdapt=glo2deu][those.]] (definitely buy some extra of those, they break easily when hand soldered)
+- 62 SK6803 MINI-E RGB LEDs. E.g.[[https://de.aliexpress.com/item/1005003636607308.html?spm=a2g0o.order_list.order_list_main.83.559e5c5fTMDYmt&gatewayAdapt=glo2deu][those.]] (people report they also easily break from heat while soldering, but none ever broke for me)
 - 1 USB-C to USB-A cable. Or USB-C to USB-C. Or however you want to connect the keyboard to your computer.
-- 2 RaspberryPi Pico RP2040 or clones of them with. E.g. [[https://de.aliexpress.com/item/1005003928558306.html][those.]] To fit them with the USB-C female to male cables (up next) make sure to get some in with USB-C connector.
+- 2 RaspberryPi Pico RP2040 or clones of them. E.g. [[https://de.aliexpress.com/item/1005003928558306.html][those.]] To fit them with the USB-C female to male cables (up next) make sure to get some in with USB-C connector.
 - 2 [[https://de.aliexpress.com/item/1005004600847544.html][Roller encoders]] (if anyone has a better source, let me know)
+- 2 [[https://de.aliexpress.com/item/1005004375650245.html][SSD1306 Displays]]
 - [[https://de.aliexpress.com/item/1005003238859317.html][2 USB-C female to male cables]]
 - [[https://de.aliexpress.com/item/4000340566128.html][1 TRRS 3,5mm cable.]] (Note: It's TRRS (Plug has three black rings) not TRS)
 - [[https://www.reichelt.de/klinkeneinbaubuchse-3-5-mm-stereo-4-pol-lum-1502-02-p116189.html?&trstct=pol_11&nbc=1][2 TRRS 3.5mm sockets.]] (Note: It's TRRS not TRS)
 - [[https://www.ebay.de/itm/125233269308?var=426269832926][~40 Jumper wires.]] Female-Female. In most cases 10cm is sufficient, but buy some 20cm, too.
+- 8 jumper wires Male-Female
 - [[https://de.aliexpress.com/item/32758380907.html][~40 straight pin headers, single row, 2.54mm distance]]
 - [[https://de.aliexpress.com/item/4000694229610.html][~40 90 degree pin headers, single row, 2.54mm distance]]
-- [[https://www.ebay.de/itm/173779404364?var=472450338468][12 M3x4 insert nuts.]]
-- [[https://www.ebay.de/itm/173779404364?var=473397195689][2 M2x3 insert nuts.]]
-- [[https://www.ebay.de/itm/165427883523?var=464984918399][12 screws M3x6.]]
-- [[https://www.ebay.de/itm/261298209327?var=560230293992][2 screws M2x8.]] These are for mounting the PMW3360 sensor. Make sure you buy some with a small head, like the ones in the link.
+- [[https://www.ebay.de/itm/173779404364?var=472450338468][14 M3x4 insert nuts.]]
+- [[https://www.ebay.de/itm/173779404364?var=473397195689][4 M2x3 insert nuts.]]
+- [[https://www.ebay.de/itm/165427883523?var=464984918399][14 screws M3x6.]]
+- [[https://www.ebay.de/itm/261298209327?var=560230293992][4 screws M2x8.]] These are for mounting the PMW3360 sensor. Make sure you buy some with a small head, like the ones in the link.
 - [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
-- [[https://www.ebay.de/itm/275315539359?hash=item401a15bd9f:g:r7EAAOSwJIZhYdp6][1 PMW3360 Motion Sensor.]]
+- [[https://www.ebay.de/itm/275829001607][1 PMW3360 Motion Sensor]]
   - if using a model with ball transfer units:
     - [[https://de.aliexpress.com/item/32343105213.html][3 NL-8H BTUs]]
   - if using a model with ball bearings:
@@ -117,18 +115,17 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - Some key caps you like with cherry mount. (the plus shaped stem, nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with Dactyls although for someone who uses Dvorak a set that has everything (Dvorak and Dactyl special keys) is hard to get.
 
 *** Consumables
-- wire, you can wire this however you like. I use insulated wire with 0.5mm diameter, but I have another Dactyl which I wired with 1mm thick uninsulated wire bent into shape so the wires do not touch. (like they wired old radios in the 50s.) It is very reliable.
-- solder, it depends on personal preference, but I used solder with 1mm diameter (Also for SMD, I don't mind) Don't be chear an solder, often enough a successfull solder job depends mostly on proper solder.
+- wire, you can wire this however you like. I use insulated wire with 0.5mm diameter
+- [[https://de.aliexpress.com/item/33023568022.html][thin wire]] (0.38mm) for the Amoeba Kings
+- solder, it depends on personal preference, but I used solder with 1mm diameter (Also for SMD, I don't mind) Don't be cheap on solder, often enough a successful solder job depends mostly on proper solder.
 - flux certainly helps for SMD soldering
-- some viscous glue
-- hot glue
 - multi meter (to check for continuity, a cheap one is enough if you don't want to use it for different things later on)
+- some shrinking tube
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
 - (optional) some spray paint you like
 
 *** Tools
 - soldering iron
-- hot glue gun
 - maybe 3D printer if you print yourself
 - small screwdriver
 - small hex keys for the screws
@@ -136,8 +133,7 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - wire cutters
 - metal saw
 - electric drill
-- 3mm drill bit
-- (maybe) a round file
+- (maybe) some files if your 3D print is not of good quality
 
 ** (optional) Enhance the 3D printed case
 
@@ -149,6 +145,7 @@ Then I spray on some filler again, wait 5 minutes and sand again. I do this 3-4 
 This will give you a flat surface, where you can not see the the 3D print layers anymore. To get an ever better really shiny flat surface additional steps are needed of course, but this is a plastic casing of a keyboard, not a piano after all.
 After that procedure I paint the case with normal paint from the hardware store. I think there are enough videos and tutorials on how to use spraying cans, so I won't get into that.
 [[file:images/after-prime.jpg]]  [[file:images/after-paint.jpg]]
+These images are from another build, so don't be confused. For this guide I opted for some half transparent cases instead.
 
 ** Wiring & Mounting
 
@@ -156,56 +153,124 @@ After that procedure I paint the case with normal paint from the hardware store.
 It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a round file to widen the holes a bit.
 Do this first because it could be that the file ruins your paint and you have to paint that particular part again. You don't want to paint this again when the switches and everything is mounted that's why we do this as a first step.
 
-*** TODO Wiring diagrams
-These are the wiring diagrams for the right and the left half. They will be useful in the next steps.
-[[file:images/wiring_right.png]] [[file:images/wiring_left.png]]
+*** Wiring diagrams
+This is the wiring diagram for the right and the left half.
+#+begin_src
 
-*** TODO (if you have the blank PCB) Solder the diodes and LEDs on.
-The T4 housing usually has a thin line, this is the cathode. The line must be on the side the diode symbol on the PCB is pointing to.
 
+                                RP2040 left
+                                +-------------------+
+ +------------------------------+GP0    +-----+ VBUS+-------------------------+
+ |   +--------------------------+GP1    | USB | VSYS|         +---------------+---+
+ |   |  +-----------+           |GND    +-----+  GND+---------|    +-LED5V    |   |
+ |   |  |OLED    SDA+-----------+GP2          3V3_EN|              |          |   |
+ |   |  |Display SCL+-----------+GP3         3V3_OUT+--------+-----+------+   |   |
+ |   |  |        GND+-----+ ROW0|GP4        ADC_VREF|        |            |   |   |
+ |   |  |        3V3+--+  | ROW1|GP5            GP28+--------+            |   |   |
+ |   |  +-----------+  |  +-----+GND             GND|Encoder Root         |   |   |
+ |   |                 |    ROW2|GP6            GP27|Encoder A            |   |   |
+ |   |                 |    ROW3|GP7            GP26|Encoder B            |   |   |
+ |   |                 |    ROW4|GP8             RUN|                     |   |   |
+ |   |                 |    ROW5|GP9            GP22|Reset switch-+       |   |   |
+ |   |                 |        |GND             GND+-------------+       |   |   |
+ |   |                 |    COL0|GP10           GP21|LEDIN                |   |   |
+ |   |                 |    COL1|GP11           GP20|                     |   |   |
+ |   |                 |    COL2|GP12           GP19|                     |   |   |
+ |   |                 |    COL3|GP13           GP18|                     |   |   |
+ |   |                 |        |GND             GND|LEDGND               |   |   |
+ |   |                 |    COL4|GP14           GP17|                     |   |   |
+ |   |                 |    COL5|GP15           GP16|                     |   |   |
+ |   |                 |        +-------------------+                     |   |   |
+ |   |                 |                                                  |   |   |
+ |   |                 |                                                  |   |   |
+ |   |                 +--------------------------------------------------+   |   |
+ |   |                                                                        |   |
+ |   |                                                                        |   |
+ |   |                                                                        |   |
+ |   |                                                                        |   |
+ |   |                                                                        |   |
+ |   |                                                  +---------------------+   |
+ |   |                                                  |                         |
+ |   |                          RP2040 right            |  +----------------------+
+ |   |                          +-------------------+   |  |
+ +---+--------------------------+GP0    +-----+ VBUS|   |  |
+     +--------------------------+GP1    | USB | VSYS|---+  |
+ +-----------+                  |GND    +-----+  GND|------+           +-LED5V
+ |OLED    SDA+------------------+GP2          3V3_EN|                  |
+ |Display SCL+------------------+GP3         3V3_OUT+---------------+--+-----------------+
+ |        GND+---------+    ROW0|GP4        ADC_VREF|               |                    |
+ |        3V3+---+     |    ROW1|GP5            GP28|--+            |                    |
+ +-----------+   |     +--------+GND             GND|--+            |                    |
+                 |          ROW2|GP6            GP27|Encoder A      |                    |
+                 |          ROW3|GP7            GP26|Encoder B      |                    |
+                 |          ROW4|GP8             RUN|               |                    |
+                 |          ROW5|GP9            GP22|Reset switch-+ |       PMW3360      |
+                 |      Enc Root|GND             GND|-------------+ |      +---------+   |
+                 |          COL0|GP10           GP21|LEDIN          +------+ VCC     |   |
+                 |          COL1|GP11           GP20|          +-----------+ MIS     |   |
+                 |          COL2|GP12           GP19+----------+-----------+ MOS     |   |
+                 |          COL3|GP13           GP18+----------+-----------+ SCL     |   |
+                 |        LEDGND|GND             GND|--+   +---+-----------+ SS      |   |
+                 |          COL4|GP14           GP17+--+---+   |       +---+ GND     |   |
+                 |          COL5|GP15           GP16+--+-------+       |   |         |   |
+                 |              +-------------------+  |               |   +---------+   |
+                 |                                     +---------------+                 |
+                 |                                                                       |
+                 |                                                                       |
+                 +- ---------------------------------------------------------------------+
+
+
+#+end_src
+
+*** Solder the diodes and LEDs on.
+The T4 housing of the diodes usually has a thin line, this is the cathode. The line must be on the side the diode symbol on the PCB is pointing to.
+[[file:images/PCB-diode-direction.jpg]]
 The RGB LEDS have one slightly slanted leg. This goes at the pad with the little white triangle. Also mount them facing with the light towards the PCB. (So upside down so to speak.)
+[[file:images/PCB-diode-direction.jpg]]
+[[file:images/LED_GND_PAD_detail.jpg]]
 
-*** TODO Solder the Amoeba kings
+**** A short note about soldering electronics
+Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can do this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place. The art here is to just put enough heat into this (if you don't have a soldering iron with a heat setting like me, read "touch the thing you want to solder long enough" here) so that the solder flows where it should, does not form a ball and covers the pad on the pin completely.
 
-*** TODO Solder the pin headers onto the PCBs and the RP2040
+*** Solder the Amoeba kings
+**** RGB LEDS
+The RGB LEDS actually are not that different to solder to the ones on the flexible boards.
+The slanted leg goes here:
+[[file:images/amoeba_rgbled_gnd_pad.jpg]]
+**** Diodes
+Since this keyboard is wired with column to row diodes, the thin line on the LED housing needs to be at this side:
+[[file:images/amoeba_diode_direction.jpg]]
 
-*** TODO Solder the switches to the PCB
+*** Solder the pin headers onto the PCBs and the RP2040
+I used straight pin headers here for the PCB which I later bent, although I would recommend to use 90 degree angled pin headers or solder the wires directly. (If so, use jumper wires where one side is cut off to connect them to the RP2040 later on)
+*** Solder the switches to the PCB
+Depending on the model and the quality of the 3D print this can be a little finicky. I would recommend to start with the switch in the middle, put it in the case, and solder the PCB an from the underside. Then work your way outwards in the way of a column. If a switch really does not want to be soldered, cut the plastic legs off. This helps by a lot. But make sure the switch can still move in the housing.
+*** Solder the roller encoders
+The roller encoders have three relevant connectors for us, which are the three pins that have wires connected to them.
+The connectors in the middle is the encoder root, which gets later connected to ground. Make sure to insulate everything well with shrinking tube.
+Its best to solder the wires on (I used jumper wires which I cut one side off of, to connect them to the RP2040 easily later) then stickt them to the small holder plates. It is a good idea to take a photos of that to remember which wire is the root contact.
+[[file:images/encoder1.jpg]]
+[[file:images/encoder2.jpg]]
 
-*** TODO Solder the roller encoders
-
-*** TODO Solder the jumper wires between the TRRS socket and the RP2040.
-Now use those male-female jumper wires. Cut of a bit of the male end, then solder them to the vertical and horizontal lines first.
-[[file:images/jumpers_to_mat.jpg]]
-On the TRRS socket it does not really matter which pin you use, as long as the same wire goes to the same pin on the other side.  (The color of the wiring diagram is the same on both sides, so the red line on the left side is the red line on the right side and so on.) However, use the sleeve for the ground at least, it is usually the one that is on the outside of the socket.
-I tend to use tip for the voltage and the ring for communication, but that is entirely up to you.
-When you are done, connect the wires to the RP2040.
-[[file:images/jumpers_to_arduino.jpg]]
+*** Solder the jumper wires between the TRRS socket and the RP2040.
+On the TRRS socket it does not really matter which pin you use, as long as the same wire goes to the same pin on the other side. However, use the sleeve for the ground at least, it is usually the one that is on the outside of the socket.
+I tend to use tip for the voltage and the rings for communication, but that is entirely up to you.
 
 *** Solder the PMW3360 trackball sensor
-A short note about soldering electronics: Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can do this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place. The art here is to just put enough heat into this (if you don't have a soldering iron with a heat setting like me, read "touch the thing you want to solder long enough" here) so that the solder flows where it should, does not form a ball and covers the pad on the pin completely.
-Solder the wires to the sensor first. You can solder the male ends in again, then cut them off on the other side. Make sure to cut them off low enough so the plastic lens thingy still fits.
+In those pictures I used jumper wires with male ends, but this wont work on many models, because the clearance to the bottom plate is not big enough. So rather use 90 degree angled pin headers or solder the wires directly to the board.
+If using jumper wires you can solder the male ends in, then cut them off on the other side. Make sure to cut them off low enough so the plastic lens thingy still fits.
 [[file:images/solder_pmw.jpg]] [[file:images/pmw_plastic_lense.jpg]]
 
-After that connect the wires to the RP2040. Some RP2040 derivatives are not delivered with pin strips soldered to the board. (but they usually come with a pin strip alongside) If so, solder the pins strips to the RP2040 is a similar way you soldered the cables to the PMW3360.
-
-*** Mounting and soldering the reset switch
-If you want to have the reset switch in the bottom plate, drill a 3mm hole at the spot where it should go.
-I noticed that 4.3mm height for the reset switch is actually to high to mount it under that bracket and I broke it off. Nothing that a bit of glue can't fix. You probably want to get even flatter ones, I had a few of those 4.3mm high ones to spare from another project, that is why I used them.
-[[file:images/reset_switch_in.jpg]]
-
-Solder two longer wires to the reset switch on the bottom plate.
-[[file:images/solder_reset.jpg]]
-
-Now that the PMW3360 and the TRS socket is connected, you will notice that there is no GND pin left on the Arduino. So solder one of the wires coming from the switch to the GND pin you used on the TRS socket. Connect the other wire to any of the two reset pins of the Arduino.
-[[file:images/reset_connect.jpg]]
-
 *** Mount the ball bearings for the trackball.
+**** If using transfer units
+This is very easy. Just press the transfer units into their sockets in the case.
+**** If using ball bearings
 If you bought pins for the bearings that are too long, put the bearing on the pin *before* sawing it off. Otherwise you could have problems putting the pins in when they are serrated from the vice or saw. Those small bearings are a very sensible part, don't make loud noises and let them sniff your hand before touching them.
 Just kidding, just don't put them in the vice and don't put a force on the inner ring without putting the same force on the outer ring.
 Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in. Once they are in you can correct their position, which determines the height of the ball and the distance between the PMW3360 and the ball by heating them up with the soldering iron. Try to get the ball down as far as possible without it touching the case.
 [[file:images/bearings-in.jpg]]
 
-*** Mount the M3 insert nuts
+*** Mount the insert nuts
 Mounting those nuts is easy if you found nuts that are big enough for the holes. You put them on your soldering iron, heat them up, then press them into the 3D print. Just make sure your soldering iron is clean from solder, otherwise solder will block the thread and screws wont go in easily.
 If you could not find nuts that are big enough, glue them in. Here is a trick how to get them in the right position: Pre-mount them on the bottom plate with a screw, like this:[[file:images/insert_prepare.jpg]]
 
@@ -213,52 +278,27 @@ Then put some glue on the insert nuts. Then mount the bottom plate into place, w
 [[file:images/inserts.jpg]]
 
 *** Mount the M2 insert nuts
-The M2 inserts and screws are for the PMW3360 sensor. Here you can mount them again to the PMW3360: [[file:images/pmw_prepare.jpg]]
+The M2 inserts and screws are for the PMW3360 sensor, the display lids and the mounts of the roller encoders. Here you can mount them again to the PMW3360: [[file:images/pmw_prepare.jpg]]
 
 Then you can glue them in. Note that the PMW must be mounted with the terminal holes up. (Down in this picture since the keyboard is upside down)
 Make sure that the plastic lense that comes with the PMW lies on that surface as flat as it can get, otherwise the ball will be too far away from it.
 [[file:images/pmw_in.jpg]]
 Again, let the glue dry and then remove the screws and the sensor again.
 
+*** TODO wiring the amoeba kings
+Since the space inside the housing is limited I would recommend to wire the Amoeba Kings up outside first, then putting them in there.
+What worked best for me is to first cut the thin 0.38mm wires into the right length, then put a drop of solder on the iron, with that and a very hot soldering iron dab the ends of the wires into that drop of liquid solder. This burns off the insulation and also puts solder on the wire making it easier to solder to the Amoeba King.
+Here are the wiring diagrams for the Amoebas for the left and right side:
+#+begin_src
+TODO!
+#+end_src
+
 *** Putting everything together
 Before putting everything together, test the setup first. Connection problems are way easier to fix when the parts are not mounted yet. So continue with the firmware guide below before mounting everything.
-The Arduino Micro has some pins on the top, which are in the way when mounting it. We do not need them, cut them off.
 Here is the thing in all its glory:
 [[file:images/done.jpg]]
 
 * TODO Flashing the firmware
-** A word about trackball modes
-What makes this firmware very special is how it handles the trackball. You can not only move the mouse pointer with it, no, you can have different modes for it.
-For further configuration see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]]
-There are stacking and non-stacking modes. Non-stacking modes are the major modes (to use emacs lingo) of the trackball, only one non-stacking mode can be activated at a given time and activating one mode will deactivate the last mode.
-Stacking modes on the other hand are like minor modes and can be activated on top of another mode.
-To active a mode you use the special keycodes that this firmware provides. You can find them below.
-
-*** Non-Stacking modes
-
-**** Cursor mode
-Moves the mouse cursor as you would expect from a trackball. This is the mode that is activated when no other mode is activated.
-
-**** Dragscroll mode
-Scrolls up and down and left and right like a mouse wheel from outer space.
-
-**** Carret mode
-Moves the carret (the pointer in text documents) when the trackball is rotated.
-
-**** Custom mode
-In this mode you can define four keycodes that get executed when you rotate the trackball.
-
-**** Mode-Mode
-One mode to rule them all! This mode activates the other modes. When the mode is active, rotate the trackball up for cursor mode, right for dragscroll mode, left for carret mode and down for integration mode.
-
-*** Stacking modes
-
-**** Sniping mode
-Decreases the cursors sensitivity during cursor mode and carret mode, allowing you to aim for something way easier.
-
-**** Integration mode
-This mode keeps the movement once it is going. This mode is only available in dragscroll and carret mode. E.g. when you have integration mode activated in dragscroll mode you give the trackball a little notch and it keeps scrolling. A nudge in the other direction slows scrolling down, a nudge in the same direction makes scrolling faster.
-
 ** Preparing the QMK firmware
 
 *** Setting up QMK
@@ -268,34 +308,24 @@ Set up QMK for your operating system. Here is the [[https://docs.qmk.fm/#/gettin
 
 For Gentoo Linux I made a little guide, since the official instructions do not work very well. Skip this part and stick to the official instructions above if you do not run Gentoo.
 
-Make sure your kernel has [[https://wiki.gentoo.org/wiki/Arduino#Arduino_MEGA.2C_Atmega8U2.2C_Atmega16U2.2C_Atmega32U4.2C_Zero_.28CDC_ACM.29][support for Atmega32U]] enabled. (gentoo-kernel-bin and unmodified gentoo-kernel have it enabled)
-To install the gcc for building avr programs, put
-#+begin_src sh /etc/portage/package.accept_keywords
-# for crossdev/ gcc-8.5 for qmk firmware
-cross-avr/gcc **
-#+end_src
-into ~/etc/portage/package.accept_keywords~ or ~/etc/portage/package.accept_keywords/cross-avr-gcc~ respectively, depending on how you set up your system.
-
-And put
-#+begin_src sh /etc/portage/package.mask
-# for crossdev/ gcc-8.5 for qmk firmware
->cross-avr/gcc-8.5.0-r1
-#+end_src
-into ~/etc/portage/package.mask~ or ~/etc/portage/package.mask/cross-avr-gcc~ respectively.
-I do not know why this is necessary, because we will order crossdev to install GCC 8.5 later, but if I do not mask the newer version, it installs the newest version of avr-gcc regardless.
-
 Then run these commands:
 #+begin_src sh
 # install dependencies
 sudo emerge dev-vcs/git dev-python/pip
-# on gentoo the python command depends on which python version has pip installed (your $PYTHON_TARGET). Run the command like this: python3.9 -m ... if your PYTHON_TARGET is 3.9
-python3.x -m pip install --user qmk
-# to build the toolchain for compiling for the Arduino (Micro). Anything higher than GCC 8.x is not recommended by qmk. (And you WILL have errors)
-sudo crossdev --stable --g '=8.5' --target avr
+#+end_src
+Gentoo now does not allow to install packages that are not provided by Gentoo into the systems Python environment.
+For that is has a mechanism called virtual environments. We need to create one of those and install qmk in there:
+#+begin_src sh
+python -m venv /path/to/venv
+. /path/to/venv/bin/activate
+pip install qmk
+#+end_src
+To build the toolchain for compiling for the RP2040 ARM processor:
+#+begin_src sh
+sudo crossdev --stable --target arm-none-eabi --env 'EXTRA_ECONF="--with-multilib-list=rmprofile"'
 #+end_src
 
-Don't bother to run ~qmk setup~ like the official guide tells you to. It would complain because our install is missing some tool chains for other micro controllers, but we only need the avr-tools for the Atmega32U.
-If you are done with crossdev, you can check with ~avr-gcc -v~ if you really have version 8.5.0 installed.
+Don't bother to run ~qmk setup~ like the official guide tells you to.
 Continue with the guide with topic Linux below.
 
 **** Linux
@@ -303,9 +333,8 @@ This probably works well for Windows and Mac, too. I do not know as I haven't tr
 
 #+begin_src sh
 # clone and prepare the QMK-Firmware repo
-git clone https://github.com/Schievel1/qmk_firmware_dm_r_track.git
+git clone https://github.com/qmk/qmk_firmware.git
 cd qmk_firmware_dm_r_track/
-git checkout tractyl_manuform_enhance
 make git-submodule
 # to test if your toolchain works, compile something:
 qmk compile -kb handwired/dactyl_manuform/5x6 -km default
@@ -392,14 +421,6 @@ The firmware also has some additional keycodes which you can use in the matrix a
 | SNIPING_MODE_TOGGLE         | SNP_TOG     | Toggles sniping mode                                                         |
 | DRAGSCROLL_MODE             | DRGSCRL     | Activates dragscroll mode while key is pressed                               |
 | DRAGSCROLL_MODE_TOGGLE      | DRG_TOG     | Toggles dragscroll mode                                                      |
-| CARRET_MODE                 | CARRETM     | Activates carret mode while key is pressed                                   |
-| CARRET_MODE_TOGGLE          | CRT_TOG     | Toggles carret mode                                                          |
-| CUSTOM_MODE                 | CUSTOMM     | Activates custom mode while key is pressed                                   |
-| CUSTOM_MODE_TOGGLE          | CST_TOG     | Toggles custom mode                                                          |
-| MODE_MODE                   | MOMO        | Activates mode-mode while key is pressed                                     |
-| MODE_MODE_TOGGLE            | MOMO_TOG    | Toggles mode-mode                                                            |
-| INTEG_MODE                  | INTEGM      | Activates integration mode while key is pressed                              |
-| INTEG_MODE_TOGGLE           | ITG_TOG     | Toggles integration mode                                                     |
 |-----------------------------+-------------+------------------------------------------------------------------------------|
 
 ***** Layers
@@ -407,8 +428,16 @@ In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the l
 #+begin_src c
 #define _COLEMAKDHM 0
 #+end_src
+On newer keymaps there is an enum instead:
+#+begin_src c
+enum custom_layers {
+    _COLEMAKDHM,
+    _LOWER,
+    _RAISE,
+};
+#+end_src
 You better leave the RAISE and LOWER name like they are. You could change them, but you would have to change them everywhere in the file.
-To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the beginning of the file. Count the number up with every layer you add.
+To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the beginning of the file or the enum. Count the number up with every layer you add.
 You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, CTRL etc. keys. So when you hold that key down, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
 
 
