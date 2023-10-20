@@ -32,7 +32,7 @@ If you follow this guide to build it, you can skip several features if you want 
     - [[#try-mounting-the-usb-c-female-to-male-cable-and-the-trs-socket][Try mounting the USB-C female to male cable and the TRS socket.]]
     - [[#wiring-diagrams][Wiring diagrams]]
     - [[#solder-the-diodes-and-leds-on][Solder the diodes and LEDs on.]]
-    - [[#solder-the-amoeba-kings][Solder the Amoeba kings]]
+    - [[#solder-the-amoeba-kings][Solder the Amoeba Kings]]
     - [[#solder-the-pin-headers-onto-the-pcbs-and-the-rp2040][Solder the pin headers onto the PCBs and the RP2040]]
     - [[#solder-the-switches-to-the-pcb][Solder the switches to the PCB]]
     - [[#solder-the-roller-encoders][Solder the roller encoders]]
@@ -229,7 +229,7 @@ The RGB LEDS have one slightly slanted leg. This goes at the pad with the little
 **** A short note about soldering electronics
 Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can do this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place. The art here is to just put enough heat into this (if you don't have a soldering iron with a heat setting like me, read "touch the thing you want to solder long enough" here) so that the solder flows where it should, does not form a ball and covers the pad on the pin completely.
 
-*** Solder the Amoeba kings
+*** Solder the Amoeba Kings
 **** RGB LEDS
 The RGB LEDS actually are not that different to solder to the ones on the flexible boards.
 The slanted leg goes where the blue arrow points at. The red arrows indicates the diode direction:
@@ -278,24 +278,28 @@ Then put some glue on the insert nuts. Then mount the bottom plate into place, w
 The M2 inserts and screws are for the PMW3360 sensor, the display lids and the mounts of the roller encoders. Here you can mount them again to the PMW3360: [[file:images/pmw_prepare.jpg]]
 
 Then you can glue them in. Note that the PMW must be mounted with the terminal holes up. (Down in this picture since the keyboard is upside down)
-Make sure that the plastic lense that comes with the PMW lies on that surface as flat as it can get, otherwise the ball will be too far away from it.
+Make sure that the plastic lens that comes with the PMW lies on that surface as flat as it can get, otherwise the ball will be too far away from it.
 [[file:images/pmw_in.jpg]]
 Again, let the glue dry and then remove the screws and the sensor again.
 
-*** TODO wiring the amoeba kings
+*** wiring the amoeba kings
 Since the space inside the housing is limited I would recommend to wire the Amoeba Kings up outside first, then putting them in there.
 What worked best for me is to first cut the thin 0.38mm wires into the right length, then put a drop of solder on the iron, with that and a very hot soldering iron dab the ends of the wires into that drop of liquid solder. This burns off the insulation and also puts solder on the wire making it easier to solder to the Amoeba King.
-Here are the wiring diagrams for the Amoebas for the left and right side:
-#+begin_src
-TODO!
-#+end_src
+To mount the Amoeba Kings I did not use hot swaps but rather just bridged the gap between the switch pin and the pad with a little piece of wire:
+[[file:images/amoeba_switch_to_pad.jpg]]
+
+**** Wiring diagrams
+***** Left side
+[[file:images/amoeba_wiring_left.jpg]]
+***** Right side
+[[file:images/amoeba_wiring_right.jpg]]
 
 *** Putting everything together
 Before putting everything together, test the setup first. Connection problems are way easier to fix when the parts are not mounted yet. So continue with the firmware guide below before mounting everything.
 Here is the thing in all its glory:
 [[file:images/done.jpg]]
 
-* TODO Flashing the firmware
+* Flashing the firmware
 ** Preparing the QMK firmware
 
 *** Setting up QMK
