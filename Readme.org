@@ -145,7 +145,6 @@ After that procedure I paint the case with normal paint from the hardware store.
 These images are from another build, so don't be confused. For this guide I opted for some half transparent cases instead.
 
 ** Wiring & Mounting
-
 *** Try mounting the USB-C female to male cable and the TRS socket.
 It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a round file to widen the holes a bit.
 Do this first because it could be that the file ruins your paint and you have to paint that particular part again. You don't want to paint this again when the switches and everything is mounted that's why we do this as a first step.
@@ -230,6 +229,7 @@ The RGB LEDS have one slightly slanted leg. This goes at the pad with the little
 Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can do this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place. The art here is to just put enough heat into this (if you don't have a soldering iron with a heat setting like me, read "touch the thing you want to solder long enough" here) so that the solder flows where it should, does not form a ball and covers the pad on the pin completely.
 
 *** Solder the Amoeba Kings
+Further detailed details about the wiring of Amoeba Kings can be found [[https://wylderbuilds.com/amoeba-kings-wtf][here]].
 **** RGB LEDS
 The RGB LEDS actually are not that different to solder to the ones on the flexible boards.
 The slanted leg goes where the blue arrow points at. The red arrows indicates the diode direction:
