@@ -223,7 +223,7 @@ This is the wiring diagram for the right and the left half.
 The T4 housing of the diodes usually has a thin line, this is the cathode. The line must be on the side the diode symbol on the PCB is pointing to.
 [[file:images/PCB-diode-direction.jpg]]
 The RGB LEDS have one slightly slanted leg. This goes at the pad with the little white triangle. Also mount them facing with the light towards the PCB. (So upside down so to speak.)
-[[file:images/PCB-diode-direction.jpg]]
+[[file:images/RGB_LED_detail.jpg]]
 [[file:images/LED_GND_PAD_detail.jpg]]
 
 **** A short note about soldering electronics
