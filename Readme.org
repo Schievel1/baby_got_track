@@ -85,7 +85,7 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - 2 [[https://www.ebay.de/itm/276107110019][flexible PCBs]]
 - 10 [[https://www.ebay.de/itm/276095258088][Amoeba Kings]]
 - 62 1N4148 Diodes in SOD-123 form. E.g. [[https://de.aliexpress.com/item/1005002383505485.html?spm=a2g0o.order_list.order_list_main.50.559e5c5fTMDYmt&gatewayAdapt=glo2deu][those.]] (definitely buy some extra of those, they break easily when hand soldered)
-- 62 SK6803 MINI-E RGB LEDs. E.g.[[https://de.aliexpress.com/item/1005003636607308.html?spm=a2g0o.order_list.order_list_main.83.559e5c5fTMDYmt&gatewayAdapt=glo2deu][those.]] (people report they also easily break from heat while soldering, but none ever broke for me)
+- 62 SK6812 MINI-E RGB LEDs. E.g. [[https://de.aliexpress.com/item/1005003636607308.html][those.]] (people report they also easily break from heat while soldering, but none ever broke for me)
 - 1 USB-C to USB-A cable. Or USB-C to USB-C. Or however you want to connect the keyboard to your computer.
 - 2 RaspberryPi Pico RP2040 or clones of them. E.g. [[https://de.aliexpress.com/item/1005003928558306.html][those.]] To fit them with the USB-C female to male cables (up next) make sure to get some in with USB-C connector.
 - 2 [[https://de.aliexpress.com/item/1005004600847544.html][Roller encoders]] (if anyone has a better source, let me know)
