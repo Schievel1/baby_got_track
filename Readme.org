@@ -43,6 +43,7 @@ If you follow this guide to build it, you can skip several features if you want 
     - [[#mount-the-m2-insert-nuts][Mount the M2 insert nuts]]
     - [[#wiring-the-amoeba-kings][wiring the amoeba kings]]
     - [[#putting-everything-together][Putting everything together]]
+    - [[#wiring-the-usb-plugs][Wiring the USB Plugs]]
 - [[#flashing-the-firmware][Flashing the firmware]]
   - [[#preparing-the-qmk-firmware][Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
@@ -90,7 +91,8 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - 2 RaspberryPi Pico RP2040 or clones of them. E.g. [[https://de.aliexpress.com/item/1005003928558306.html][those.]] To fit them with the USB-C female to male cables (up next) make sure to get some in with USB-C connector.
 - 2 [[https://de.aliexpress.com/item/1005004600847544.html][Roller encoders]] (if anyone has a better source, let me know)
 - 2 [[https://de.aliexpress.com/item/1005004375650245.html][SSD1306 Displays]]
-- [[https://de.aliexpress.com/item/1005003238859317.html][2 USB-C female to male cables]]
+- [[https://de.aliexpress.com/item/1005005913126877.html][2 USB-C plugs]] / or [[https://de.aliexpress.com/item/1005005461960169.html][those (4 PIN)]]
+- 1 [[https://de.aliexpress.com/item/1005003238859317.html][USB-C male to male cable]], CMST-CMST (10cm)
 - [[https://de.aliexpress.com/item/4000340566128.html][1 TRRS 3,5mm cable.]] (Note: It's TRRS (Plug has three black rings) not TRS)
 - [[https://www.reichelt.de/klinkeneinbaubuchse-3-5-mm-stereo-4-pol-lum-1502-02-p116189.html?&trstct=pol_11&nbc=1][2 TRRS 3.5mm sockets.]] (Note: It's TRRS not TRS)
 - [[https://www.ebay.de/itm/125233269308?var=426269832926][~40 Jumper wires.]] Female-Female. In most cases 10cm is sufficient, but buy some 20cm, too.
@@ -116,7 +118,6 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - [[https://de.aliexpress.com/item/33023568022.html][thin wire]] (0.38mm) for the Amoeba Kings
 - solder, it depends on personal preference, but I used solder with 1mm diameter (Also for SMD, I don't mind) Don't be cheap on solder, often enough a successful solder job depends mostly on proper solder.
 - flux certainly helps for SMD soldering
-- multi meter (to check for continuity, a cheap one is enough if you don't want to use it for different things later on)
 - some shrinking tube
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
 - (optional) some spray paint you like
@@ -124,7 +125,8 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 *** Tools
 - soldering iron
 - maybe 3D printer if you print yourself
-- small screwdriver
+- multi meter (to check for continuity, a cheap one is enough if you don't want to use it for different things later on)
+- small Phillips screwdriver
 - small hex keys for the screws
 - nose pliers
 - wire cutters
@@ -298,6 +300,12 @@ To mount the Amoeba Kings I did not use hot swaps but rather just bridged the ga
 Before putting everything together, test the setup first. Connection problems are way easier to fix when the parts are not mounted yet. So continue with the firmware guide below before mounting everything.
 Here is the thing in all its glory:
 [[file:images/done.jpg]]
+
+*** Wiring the USB Plugs
+Cut the USB male to male cable in half, separate the wires and strip them a few millimeters. Now plug the cable into the USB plugs like this and measure continuity:
+[[file:images/usb-check-conti.jpg]]
+Each wire that has continuity must be soldered to the wire of the plug.
+[[file:images/usb-done.jpg]]
 
 * Flashing the firmware
 ** Preparing the QMK firmware
